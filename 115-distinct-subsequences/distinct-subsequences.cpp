@@ -105,6 +105,26 @@ public:
         return (int)prev[m];
     }
 
+    int solveSo2(string s, string t, int n, int m) {
+        vector<double> dp(m + 1, 0);
+
+        dp[0] = 1;
+
+        for(int i = 1; i <= n; i++) {
+
+            for(int j = m; j > 0; j--) {
+
+                if(s[i - 1] == t[j - 1]) {
+
+                    dp[j] = dp[j - 1] + dp[j];
+
+                }
+            }
+        }
+
+        return (int)dp[m];
+    }
+
     int numDistinct(string s, string t) {
         int n = s.size();
         int m = t.size();
@@ -116,7 +136,9 @@ public:
 
         // return solveTab(s, t, n, m);
 
-        return solveSo(s, t, n, m);
+        // return solveSo(s, t, n, m);
+
+        return solveSo2(s, t, n, m);
 
     }
 };
