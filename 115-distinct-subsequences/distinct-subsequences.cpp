@@ -76,6 +76,35 @@ public:
         return (int)dp[n][m];
     }
 
+    int solveSo(string s, string t, int n, int m) {
+        vector<double> prev(m + 1, 0);
+        vector<double> curr(m + 1, 0);
+
+        prev[0] = curr[0] = 1;
+
+        for(int i = 1; i <= n; i++) {
+
+            for(int j = 1; j <= m; j++) {
+
+                if(s[i - 1] == t[j - 1]) {
+
+                    curr[j] = prev[j - 1] + prev[j];
+
+                }
+
+                else {
+
+                    curr[j] = prev[j];
+
+                }
+            }
+
+            prev = curr;
+        }
+
+        return (int)prev[m];
+    }
+
     int numDistinct(string s, string t) {
         int n = s.size();
         int m = t.size();
@@ -85,7 +114,9 @@ public:
         // vector<vector<int>> dp(n + 1, vector<int>(m + 1, -1));
         // return solveMem(s, t, n - 1, m - 1, dp);
 
-        return solveTab(s, t, n, m);
+        // return solveTab(s, t, n, m);
+
+        return solveSo(s, t, n, m);
 
     }
 };
