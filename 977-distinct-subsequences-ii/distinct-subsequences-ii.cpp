@@ -21,6 +21,24 @@ public:
         return dp[i] = total;
     }
 
+    int solveTab(vector<int>& prev, int n) {
+        vector<int> dp(n + 1, 0);
+        dp[0] = 1;
+
+        for(int i = 1; i <= n; i++) {
+            int total = (2 * dp[i - 1]) % mod;
+
+            if(prev[i] != 0) {
+                int duplicates = dp[prev[i] - 1] % mod;
+                total = (total - duplicates + mod) % mod;
+            }
+
+            dp[i] = total;
+        }
+
+        return dp[n];
+    }
+
     int distinctSubseqII(string s) {
         int n = s.size();
 
@@ -34,8 +52,10 @@ public:
             lastSeen[idx] = i;
         }
 
-        vector<int> dp(n + 1, -1);
+        // vector<int> dp(n + 1, -1);
 
-        return (solveMem(n, dp, prev) - 1 + mod) % mod;
+        // return (solveMem(n, dp, prev) - 1 + mod) % mod;
+
+        return (solveTab(prev, n) - 1 + mod) % mod;
     }
 };
