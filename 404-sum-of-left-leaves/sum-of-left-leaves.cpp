@@ -11,26 +11,22 @@
  */
 class Solution {
 public:
-    void solve(TreeNode* root, bool left, int& ans) {
-        if(root -> left == NULL && root -> right == NULL) {
-            if(left) {
-                ans += root -> val;
-            }
-        }
-
-        if(root -> left) {
-            solve(root -> left, true, ans);
-        }
-
-        if(root -> right) {
-            solve(root -> right, false, ans);
-        }
-    }
-
     int sumOfLeftLeaves(TreeNode* root) {
-        int ans = 0;
-        solve(root, false, ans);
+        if(root == NULL) {
+            return 0;
+        }
+        
+        int sum = 0;
 
-        return ans;
+        if (root -> left != NULL &&
+            root -> left -> left == NULL &&
+            root -> left -> right == NULL) {
+            sum += root->left->val;
+        }
+
+        sum += sumOfLeftLeaves(root -> left);
+        sum += sumOfLeftLeaves(root -> right);
+
+        return sum;
     }
 };
